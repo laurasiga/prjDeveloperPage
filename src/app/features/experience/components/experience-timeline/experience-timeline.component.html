@@ -1,0 +1,85 @@
+<section class="timeline-wrapper">
+  <div class="timeline-header">
+    <h2 class="section-title">Trayectoria Profesional &amp; Educación</h2>
+    
+    <!-- Filtros por Categoría -->
+    <div class="filter-bar" role="tablist">
+      <button 
+        type="button" 
+        class="filter-btn" 
+        [class.active]="activeFilter() === 'all'"
+        (click)="setFilter('all')"
+      >
+        Todos
+      </button>
+      <button 
+        type="button" 
+        class="filter-btn" 
+        [class.active]="activeFilter() === 'work'"
+        (click)="setFilter('work')"
+      >
+        Experiencia
+      </button>
+      <button 
+        type="button" 
+        class="filter-btn" 
+        [class.active]="activeFilter() === 'education'"
+        (click)="setFilter('education')"
+      >
+        Educación
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenedor del Timeline -->
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+
+    @for (item of filteredItems(); track item.id) {
+      <!-- Carga perezosa de elementos al hacer scroll con @defer (Viewport) en Angular 19 -->
+      @defer (on viewport) {
+        <article class="timeline-item" (click)="onSelect(item)">
+          <div class="timeline-node" [class]="item.type">
+            @switch (item.type) {
+              @case ('work') { 💼 }
+              @case ('education') { 🎓 }
+              @default { 🚀 }
+            }
+          </div>
+
+          <div class="timeline-card">
+            <div class="card-header">
+              <span class="period-badge">{{ item.period }}</span>
+              <span class="type-badge" [class]="item.type">
+                {{ item.type === 'work' ? 'Laboral' : 'Académico' }}
+              </span>
+            </div>
+
+            <h3 class="item-role">{{ item.role }}</h3>
+            <h4 class="item-company">{{ item.companyOrInstitution }}</h4>
+
+            <p class="item-description">{{ item.description }}</p>
+
+            @if (item.achievements.length > 0) {
+              <ul class="achievements-list">
+                @for (achievement of item.achievements; track achievement) {
+                  <li>{{ achievement }}</li>
+                }
+              </ul>
+            }
+
+            <div class="skills-tags">
+              @for (skill of item.skills; track skill) {
+                <span class="skill-chip">{{ skill }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      } @placeholder {
+        <div class="timeline-skeleton">Cargando elemento...</div>
+      }
+    } @empty {
+      <p class="empty-state">No se encontraron registros para el filtro seleccionado.</p>
+    }
+  </div>
+</section>

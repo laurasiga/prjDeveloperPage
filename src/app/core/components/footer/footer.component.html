@@ -1,0 +1,50 @@
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Columna 1: Branding y Descripción -->
+    <div class="footer-brand">
+      <a routerLink="/home" class="logo">
+        <span class="logo-bracket">&lt;</span>
+        <span class="logo-text">FullStackDev</span>
+        <span class="logo-bracket"> /&gt;</span>
+      </a>
+      <p class="brand-description">
+        Desarrollo de software de extremo a extremo enfocado en arquitectura limpia, rendimiento y aplicaciones escalables.
+      </p>
+    </div>
+
+    <!-- Columna 2: Navegación Rápida -->
+    <div class="footer-links">
+      <h4 class="footer-title">Navegación</h4>
+      <ul>
+        <li><a routerLink="/home">Inicio</a></li>
+        <li><a routerLink="/projects">Proyectos</a></li>
+        <li><a routerLink="/experience">Experiencia</a></li>
+        <li><a routerLink="/contact">Contacto</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Redes y Contacto -->
+    <div class="footer-social">
+      <h4 class="footer-title">Conecta conmigo</h4>
+      <div class="social-icons">
+        @for (link of socialLinks; track link.name) {
+          <a
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            [attr.aria-label]="link.name"
+          >
+            <span class="icon">{{ link.icon }}</span>
+            <span class="label">{{ link.name }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {{ currentYear() }} FullStackDev. Todos los derechos reservados.</p>
+    <p class="tech-tag">Diseñado con Angular 18 &amp; TypeScript</p>
+  </div>
+</footer>

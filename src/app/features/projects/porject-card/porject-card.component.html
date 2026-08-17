@@ -1,0 +1,101 @@
+<article class="project-card" [class.featured]="project().featured">
+  <div class="card-header">
+    <img [src]="project().imageUrl" [alt]="project().title" class="card-image" loading="lazy" />
+    @if (project().featured) {
+      <span class="badge-featured">Destacado</span>
+    }
+  </div>
+
+  <div class="card-body">
+    <div class="title-row">
+      <h3 class="card-title">{{ project().title }}</h3>
+      <button 
+        type="button" 
+        class="btn-like" 
+        [class.liked]="isLiked()" 
+        (click)="toggleLike()" 
+        aria-label="Marcar como favorito"
+      >
+        ♥
+      </button>
+    </div>
+
+    <p class="tech-stack">{{ techStackFormatted() }}</p>
+    <p class="card-description">{{ project().description }}</p>
+
+    <!-- Control Flow nativo (@if) controlando visibilidad por Signal -->
+    @if (isExpanded() && project().longDescription) {
+      <div class="extended-details">
+        <h4>Arquitectura y Detalles Técnicos</h4>
+        <p>{{ project().longDescription }}</p>
+      </div>
+    }
+
+    <div class="actions-row">
+      <a [href]="project().githubUrl" target="_blank" rel="noopener" class="btn btn-secondary">
+        Código Fuente
+      </a>
+      <a [href]="project().liveDemoUrl" target="_blank" rel="noopener" class="btn btn-primary">
+        Demo en Vivo
+      </a>
+      <button type="button" class="btn btn-text" (click)="toggleDetails()">
+        {{ isExpanded() ? 'Ver menos' : 'Saber más' }}
+      </button>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Formulario Reactivo de Contacto / Consulta -->
+    <section class="inquiry-section">
+      <h4>¿Te interesa este proyecto?</h4>
+
+      @if (formSentSuccess()) {
+        <div class="alert alert-success">
+          ¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.
+        </div>
+      }
+
+      <form [formGroup]="inquiryForm" (ngSubmit)="onSubmitInquiry()" class="inquiry-form">
+        <div class="form-group">
+          <input 
+            type="email" 
+            formControlName="email" 
+            placeholder="Tu correo electrónico"
+            [class.is-invalid]="isFieldInvalid('email')" 
+          />
+          @if (isFieldInvalid('email')) {
+            <small class="error-text">Ingresa un correo electrónico válido.</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <select formControlName="interestType">
+            <option value="question">Tengo una duda técnica</option>
+            <option value="collaborate">Quiero colaborar</option>
+            <option value="hire">Interés de contratación</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <textarea 
+            formControlName="message" 
+            rows="2" 
+            placeholder="Escribe tu mensaje..."
+            [class.is-invalid]="isFieldInvalid('message')"
+          ></textarea>
+          @if (isFieldInvalid('message')) {
+            <small class="error-text">El mensaje debe tener al menos 10 caracteres.</small>
+          }
+        </div>
+
+        <button 
+          type="submit" 
+          class="btn btn-submit" 
+          [disabled]="isSubmitting() || inquiryForm.invalid"
+        >
+          {{ isSubmitting() ? 'Enviando...' : 'Enviar Consulta' }}
+        </button>
+      </form>
+    </section>
+  </div>
+</article>
