@@ -1,0 +1,62 @@
+name: CI/CD Angular 19 Portfolio
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Permisos requeridos para el despliegue automático en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garantiza que solo un despliegue ocurra a la vez
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener el código fuente
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js (v20 LTS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar calidad de código (Linter)
+        run: npm run lint --if-present
+
+      - name: Ejecutar pruebas unitarias (Karma / Chrome Headless)
+        run: npx ng test --watch=false --browsers=ChromeHeadless
+
+      - name: Compilar aplicación para producción
+        run: npx ng build --configuration production --base-href /prjDeveloperPage/
+
+      - name: Cargar artefacto para GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'dist/prj-developer-page/browser' # Sustituir 'portfolio' por el name de angular.json
+
+  deploy:
+    needs: test-and-build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
