@@ -41,7 +41,7 @@ jobs:
         run: npx ng test --watch=false --browsers=ChromeHeadless
 
       - name: Compilar aplicación para producción
-        run: npx ng build --configuration production
+        run: npx ng build --configuration production --base-href /prjDeveloperPage/
 
       - name: Cargar artefacto para GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
