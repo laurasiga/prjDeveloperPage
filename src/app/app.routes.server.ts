@@ -21,5 +21,6 @@ export const serverRoutes: ServerRoute[] = [
     path: '**',
     renderMode: RenderMode.Client // Fallback a renderizado tradicional de Single Page Application
   }
+
   
 ];
