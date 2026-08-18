@@ -30,7 +30,7 @@ describe('ExperienceTimelineComponent', () => {
 
   it('should create', () => {
   const fixture = TestBed.createComponent(ExperienceTimelineComponent);
-  fixture.debugElement.setInput('items', []); // Use setInput for input signals
+  fixture.componentRef.setInput('items', []); // Use setInput for input signals
   fixture.detectChanges();
   expect(fixture.componentInstance).toBeTruthy();
 });
