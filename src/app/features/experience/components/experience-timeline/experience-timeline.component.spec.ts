@@ -14,6 +14,7 @@ describe('ExperienceTimelineComponent', () => {
 
     fixture = TestBed.createComponent(ExperienceTimelineComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('items', []); // Set before detectChanges
     fixture.detectChanges();
   });
 
@@ -29,9 +30,9 @@ describe('ExperienceTimelineComponent', () => {
   // });
 
   it('should create', () => {
-  const fixture = TestBed.createComponent(ExperienceTimelineComponent);
-  fixture.componentRef.setInput('items', []); // Use setInput for input signals
-  fixture.detectChanges();
+  //const fixture = TestBed.createComponent(ExperienceTimelineComponent);
+  // fixture.componentRef.setInput('items', []); // Use setInput for input signals
+  // fixture.detectChanges();
   expect(fixture.componentInstance).toBeTruthy();
 });
 });
