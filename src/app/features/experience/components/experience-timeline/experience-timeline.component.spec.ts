@@ -21,10 +21,17 @@ describe('ExperienceTimelineComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 
+  // it('should create', () => {
+  //   const fixture = TestBed.createComponent(ExperienceTimelineComponent);
+  //   fixture.componentInstance.items = []; // Provide required input
+  //   fixture.detectChanges();
+  //   expect(fixture.componentInstance).toBeTruthy();
+  // });
+
   it('should create', () => {
-    const fixture = TestBed.createComponent(ExperienceTimelineComponent);
-    fixture.componentInstance.items = []; // Provide required input
-    fixture.detectChanges();
-    expect(fixture.componentInstance).toBeTruthy();
-  });
+  const fixture = TestBed.createComponent(ExperienceTimelineComponent);
+  fixture.debugElement.setInput('items', []); // Use setInput for input signals
+  fixture.detectChanges();
+  expect(fixture.componentInstance).toBeTruthy();
+});
 });
