@@ -8,6 +8,7 @@ import { FooterComponent} from './core/components/footer/footer.component';
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
+  <h1>Hello, prjDeveloperPage</h1>
     <app-header />
     <main class="main-content">
       <router-outlet />

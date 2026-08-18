@@ -17,7 +17,14 @@ describe('ExperienceTimelineComponent', () => {
     fixture.detectChanges();
   });
 
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
+
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(ExperienceTimelineComponent);
+    fixture.componentInstance.items = []; // Provide required input
+    fixture.detectChanges();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
