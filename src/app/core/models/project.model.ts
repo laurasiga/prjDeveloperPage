@@ -6,7 +6,7 @@ export interface Project {
   tags: string[];
   imageUrl: string;
   githubUrl: string;
-  liveDemoUrl: string;
+  // liveDemoUrl: string;
   featured: boolean;
 }
 export interface ProjectInquiry {
