@@ -43,11 +43,27 @@ jobs:
       - name: Compilar aplicación para producción
         run: npx ng build --configuration production --base-href /prjDeveloperPage/
 
+      - name: Show build output (debug)
+        run: |
+          echo "Working directory: $(pwd)"
+          echo "Repo root listing:"
+          ls -la
+          echo ""
+          echo "dist contents:"
+          ls -la dist || true
+          echo ""
+          echo "dist/prj-developer-page contents:"
+          ls -la dist/prj-developer-page || true
+          echo ""
+          echo "Files under dist (first 200 lines):"
+          find dist -maxdepth 5 -type f -print | sed -n '1,200p'
+
       - name: Cargar artefacto para GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist/prj-developer-page/browser' # Sustituir 'portfolio' por el name de angular.json
+          path: 'dist/prj-developer-page' # Sustituir 'portfolio' por el name de angular.json
+          # path: 'dist/prj-developer-page/browser' # Sustituir 'portfolio' por el name de angular.json
 
   deploy:
     needs: test-and-build
